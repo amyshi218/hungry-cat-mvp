@@ -1,0 +1,27 @@
+body {
+  background-color: #EFE5DC;
+  font-family: 'Maven Pro', sans-serif;
+}
+
+.chicken {
+  display: inline-block;
+  animation: move 2s linear infinite;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+
+}
+
+
+@keyframes move {
+  0%{
+    transform: translate(0,110vh);opacity: .50;
+  }
+  50%{
+    transform: translate(110vw,0);opacity: 1;
+  }
+  100%{
+    transform: translate(0,110vh);opacity: .50;
+  }
+}
+
