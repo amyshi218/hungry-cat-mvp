@@ -10,8 +10,8 @@ const Title = styled.h1`
 `;
 
 const LoginParent = styled.div`
-  display: flex;
-  justify-content: flex-start;
+  display: inline-grid;
+  grid-template-columns: repeat(3, 33%);
   height: 280px;
   width: 100%;
   margin: auto;
@@ -64,7 +64,7 @@ const StartGameButton = styled.input`
   width: 100px;
 `;
 
-const PickAvatar = styled.h3`
+const H3 = styled.h3`
   font-family: 'Maven Pro', sans-serif;
   color: #FE5F55;
   text-align: center
@@ -87,6 +87,8 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [cat, setCat] = useState('');
   const [start, setStart] = useState(false);
+  //array of objects
+  const [highScore, setHighScore] = useState([]);
 
 
   console.log('cat', cat)
@@ -106,6 +108,23 @@ const App = () => {
       })
   }
 
+  const getHighScore = () => {
+    axios.get('/score')
+      .then((data) => {
+        console.log('high score data', data);
+        let sortedScores = data.data.sort((a, b) => b.score - a.score).slice(0, 5)
+        setHighScore(sortedScores)
+      })
+      .catch((err) => {
+        console.log('err in getting high score', err);
+      })
+  }
+
+  console.log('highscore',highScore )
+
+  useEffect(() => {
+    getHighScore();
+  }, [])
 
   return (
     <div>
@@ -128,7 +147,7 @@ const App = () => {
               <input type="email" name="name" onChange={ (e) => setEmail(e.target.value) } required={true}/>
             </div>
           </Formlabel>
-          <PickAvatar>Pick your cat</PickAvatar>
+          <H3>Pick your cat</H3>
           <CatsParent>
             <CatsSection>
               <CatsImg src="https://i.imgur.com/6oRAfeW.png" onClick={() => setCat('Orange cat')} />
@@ -144,7 +163,14 @@ const App = () => {
           <StartGameButton type="submit" value="Submit" onClick={ (e) =>  { e.preventDefault(); addPlayer(); }}/>
         </form>
         </Login>
-        <HighScore></HighScore>
+        <HighScore>
+          <H3> High Score</H3>
+          <ol>
+            {highScore.map((score, idx) => (
+              <li key={idx}>{score.name} <a style={{textAlign: "right"}}>{score.score}</a></li>
+            ))}
+          </ol>
+        </HighScore>
       </LoginParent>
 
       <GameView cat={cat} start={start}/>

@@ -8,7 +8,7 @@ const Game = styled.div`
   background-size: cover;
   border: 3px solid #820933;
   border-radius: 5%;
-  height: 500px;
+  height: 550px;
   width: 90%;
   margin: auto;
 `;
@@ -27,9 +27,10 @@ const CurrentScore = styled.div`
   height: 80px;
 `;
 
-const Restart =styled.div`
-
+const Timer =styled.div`
+  background: #FBFEFB;
   border: 3px solid #820933;
+  border-radius: 5%;
   width: 120px;
   height: 80px;
 `;
@@ -42,11 +43,19 @@ const GameView = ({cat, start}) => {
 
   const [score, setScore] = useState(0);
 
+  const time = () => {
+    let timeleft = 30;
+    let downloadTimer = setInterval(() => {
+      timeleft--;
+      document.getElementById("countdown").textContent = timeleft;
+      if (timeleft <= 0)
+        clearInterval(downloadTimer)}, 1000);
+  }
+
 
   setInterval(generateFood, 2000);
 
   const generateFood = () => {
-
     return (
       <img className="chicken" src="https://i.imgur.com/6oRAfeW.png"></img>
     )
@@ -63,7 +72,12 @@ const GameView = ({cat, start}) => {
           <p style={{textAlign: "center", marginBottom: "3px"}}>Current Score</p>
           <h2 style={{textAlign: "center", marginTop: "0px"}}>{score}</h2>
         </CurrentScore>
-        <Restart></Restart>
+        <Timer>
+          {start ? time() : null}
+          <p style={{textAlign: "center", marginBottom: "2px"}}>Time Left</p>
+          <h1 id="countdown" style={{textAlign: "center", marginTop: "0px"}}>30</h1>
+
+        </Timer>
       </ControlPanel>
       <Game>
        {start ? generateFood() : null}
