@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import chicken from '../../public/images/chicken.png';
+import cheese from '../../public/images/cheese.png';
+import fish from '../../public/images/fish.png';
+import can from '../../public/images/can.png';
+import bone from '../../public/images/bone.png';
+import orangecat from '../../public/images/orangecat.png';
+import whitecat from '../../public/images/whitecat.png';
+import greycat from '../../public/images/greycat.png';
+import orangecatcursor from '../../public/images/orangecatcursor.png';
+
 
 const background = "https://studioaka.co.uk/wp-content/uploads/2021/01/Layer-4.png"
 const Game = styled.div`
@@ -9,7 +19,7 @@ const Game = styled.div`
   border: 3px solid #820933;
   border-radius: 5%;
   height: 550px;
-  width: 90%;
+  width: 100%;
   margin: auto;
 `;
 
@@ -36,34 +46,93 @@ const Timer =styled.div`
 `;
 
 
+const Food = styled.img`
+  position: relative;
+  width: 80px;
+  height: auto;
+`;
+
 //TODO get food to only move around the div
 //generate food at different intervals
 
-const GameView = ({cat, start}) => {
+const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHighScore}) => {
 
   const [score, setScore] = useState(0);
+  const [play, setPlay] = useState(false);
+  console.log('cat', cat)
+
+  // let cursorCat;
+
+  // const setCursor = () => {
+  //   if (cat === 'Orange cat') {
+  //     cursorCat = cursortypes[0]
+  //   }
+  //   //  else if (cat === 'White cat' ) {
+  //   //   avatar.cursor = "url(https://i.imgur.com/wPW1kGS.png), grab"
+  //   // } else if (cat === 'Grey cat' ) {
+  //   //   avatar.cursor = "url(https://i.imgur.com/QRKXzxp.png), grab"
+  //   // }
+  // }
+
+
+  // useEffect(() => {
+  //   setCursor();
+  // }, [cat])
+  const incrementScore = () => {
+    let newScore = score + 1;
+    setScore(newScore)
+  }
+
+  const locationH = () => Math.random() * 450
+  const locationW = () => Math.random() * 550
+
+  const food = [chicken, cheese, fish, can];
+  let idx = Math.floor(Math.random() * food.length);
+  const generateFood = () => (
+    <Food className="food" src={food[Math.floor(Math.random() * food.length)]} style={{top: locationH(), left: locationW()}} onClick={() => incrementScore()}/>
+  )
+
+  const int = setInterval(generateFood, 2000)
+
+
 
   const time = () => {
     let timeleft = 30;
     let downloadTimer = setInterval(() => {
       timeleft--;
       document.getElementById("countdown").textContent = timeleft;
-      if (timeleft <= 0)
-        clearInterval(downloadTimer)}, 1000);
+      if (timeleft === 0) {
+        setStart(false)
+
+        // console.log('player', player)
+        // console.log('score', score)
+        updateScoreBoard()
+        clearInterval(downloadTimer)
+      }
+    }, 1000);
   }
 
-
-  setInterval(generateFood, 2000);
-
-  const generateFood = () => {
-    return (
-      <img className="chicken" src="https://i.imgur.com/6oRAfeW.png"></img>
-    )
+  const updateScoreBoard = () => {
+    player.score = score
+    axios.post('/score', player)
+    .then(() => {
+      console.log('Success posting in app');
+      getHighScore()
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
+console.log('score', score)
 
   useEffect(() => {
-    setInterval(generateFood, 2000);
+    // setInterval(generateFood, 2000);
+    setPlay(start);
+    // setCursor();
   }, [start])
+
+
+
 
   return (
     <>
@@ -79,12 +148,24 @@ const GameView = ({cat, start}) => {
 
         </Timer>
       </ControlPanel>
-      <Game>
-       {start ? generateFood() : null}
+
+
+      <Game id="game" style={{cursor: `url(${orangecatcursor}), auto`}}>
+       {/* { start ? setInterval(() => generateFood(), 2000) :  null} */}
+
+       {generateFood()}
+       {generateFood()}
+       {generateFood()}
+       {generateFood()}
 
       </Game>
+
+
+
     </>
   )
 }
 
 export default GameView;
+
+// `url(${avatar})`

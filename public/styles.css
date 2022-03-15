@@ -3,25 +3,61 @@ body {
   font-family: 'Maven Pro', sans-serif;
 }
 
-.chicken {
+.food {
   display: inline-block;
-  animation: move 2s linear infinite;
+  animation: move 10s linear infinite;
   top: 0;
   bottom: 0;
-  position: fixed;
+  position: absolute;
 
 }
 
 
-@keyframes move {
+/* @keyframes move {
   0%{
-    transform: translate(0,110vh);opacity: .50;
+    transform: translate(0,110vh);
   }
   50%{
-    transform: translate(110vw,0);opacity: 1;
+    transform: translate(110vw,0);
   }
   100%{
-    transform: translate(0,110vh);opacity: .50;
+    transform: translate(0,110vh);
+  }
+} */
+
+
+ @keyframes move {
+    98.001%, 0% {
+      display: block;
+  transform: translateX(-10%) translateY(100%) rotateZ(10deg)
+  }
+
+  15% {
+  transform: translateX(80%) translateY(50%) rotateZ(180deg)
+  }
+
+  15.001%, 18% {
+  transform: translateX(80%) translateY(-30%) rotateZ(0deg)
+  }
+
+   40% {
+  transform: translateX(-200%) translateY(3vh) rotateZ(-180deg)
+  }
+
+  40.001%, 43% {
+  transform: translateX(-200%) translateY(50%) rotateZ(-180deg)
+  }
+
+  65% {
+  transform: translateX(100%) translateY(50%) rotateZ(0deg)
+  }
+
+  65.001%, 68% {
+  transform: translateX(20vw) translateY(-200%) rotateZ(180deg)
+  }
+
+  95% {
+  transform: translateX(10vw) translateY(100%) rotateZ(0deg)
   }
 }
 

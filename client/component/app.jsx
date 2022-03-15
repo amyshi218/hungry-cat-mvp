@@ -87,17 +87,17 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [cat, setCat] = useState('');
   const [start, setStart] = useState(false);
+  const [player, setPlayer] = useState(null)
   //array of objects
   const [highScore, setHighScore] = useState([]);
 
-
-  console.log('cat', cat)
   const addPlayer = () => {
     let newPlayer = {
       name: username,
       email: email,
       score: score
     }
+    setPlayer(newPlayer)
     axios.post('/score', newPlayer)
       .then(() => {
         console.log('Success posting in app')
@@ -111,7 +111,6 @@ const App = () => {
   const getHighScore = () => {
     axios.get('/score')
       .then((data) => {
-        console.log('high score data', data);
         let sortedScores = data.data.sort((a, b) => b.score - a.score).slice(0, 5)
         setHighScore(sortedScores)
       })
@@ -120,11 +119,14 @@ const App = () => {
       })
   }
 
-  console.log('highscore',highScore )
 
   useEffect(() => {
     getHighScore();
   }, [])
+
+  useEffect(() => {
+
+  }, [highScore])
 
   return (
     <div>
@@ -173,7 +175,7 @@ const App = () => {
         </HighScore>
       </LoginParent>
 
-      <GameView cat={cat} start={start}/>
+      <GameView cat={cat} start={start} setStart={setStart} player={player} setPlayer={setPlayer} getHighScore={getHighScore} setHighScore={setHighScore}/>
 
 
     </div>
