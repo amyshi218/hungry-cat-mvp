@@ -18,7 +18,7 @@ const LoginParent = styled.div`
 `;
 
 const Login = styled.div`
-  border: 3px solid #820933;
+  border: 1px solid #820933;
   margin: auto;
   width: 300px;
   height: 280px;
@@ -71,7 +71,7 @@ const H3 = styled.h3`
 `;
 
 const HighScore = styled.div`
-  border: 3px solid #820933;
+  border: 1px solid #820933;
   margin: auto;
   width: 300px;
   height: 280px;
@@ -136,7 +136,7 @@ const App = () => {
       <LoginParent>
         <img src="https://i.imgur.com/P2CJX21.png" style={{justifySelf: "start"}}></img>
         <Login>
-        <form>
+        <div>
           <Formlabel>
             Username
             <div>
@@ -162,8 +162,8 @@ const App = () => {
             </CatsSection>
           </CatsParent>
           {cat ? <div style={{textAlign : "center"}}>{cat} picked!</div> : null}
-          <StartGameButton type="submit" value="Submit" onClick={ (e) =>  { e.preventDefault(); addPlayer(); }}/>
-        </form>
+          <StartGameButton type="submit" value="Submit" onClick={ (e) =>  {  addPlayer(); }}/>
+        </div>
         </Login>
         <HighScore>
           <H3> High Score</H3>

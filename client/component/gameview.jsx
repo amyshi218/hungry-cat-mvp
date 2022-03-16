@@ -10,13 +10,14 @@ import orangecat from '../../public/images/orangecat.png';
 import whitecat from '../../public/images/whitecat.png';
 import greycat from '../../public/images/greycat.png';
 import orangecatcursor from '../../public/images/orangecatcursor.png';
-
+import whitecatcursor from '../../public/images/whitecatcursor.png';
+import greycatcursor from '../../public/images/greycatcursor.png';
 
 const background = "https://studioaka.co.uk/wp-content/uploads/2021/01/Layer-4.png"
 const Game = styled.div`
   background: url(${background});
   background-size: cover;
-  border: 3px solid #820933;
+  border: 1px solid #820933;
   border-radius: 5%;
   height: 550px;
   width: 100%;
@@ -31,7 +32,7 @@ const ControlPanel = styled.div`
 
 const CurrentScore = styled.div`
   background: #FBFEFB;
-  border: 3px solid #820933;
+  border: 1px solid #820933;
   border-radius: 5%;
   width: 150px;
   height: 80px;
@@ -39,7 +40,7 @@ const CurrentScore = styled.div`
 
 const Timer =styled.div`
   background: #FBFEFB;
-  border: 3px solid #820933;
+  border: 1px solid #820933;
   border-radius: 5%;
   width: 120px;
   height: 80px;
@@ -48,52 +49,59 @@ const Timer =styled.div`
 
 const Food = styled.img`
   position: relative;
-  width: 80px;
+  width: 100px;
   height: auto;
 `;
 
 //TODO get food to only move around the div
 //generate food at different intervals
 
+//timer restarting at every click of a food item???
+
 const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHighScore}) => {
 
   const [score, setScore] = useState(0);
-  const [play, setPlay] = useState(false);
-  console.log('cat', cat)
+  const [cursorCat, setCursorCat] = useState(`url(${orangecatcursor}), grab`)
 
-  // let cursorCat;
+  const setCursor = () => {
+    if (cat === 'Orange cat') {
+      setCursorCat(`url(${orangecatcursor}), grab`)
+    }
+     else if (cat === 'White cat' ) {
+      setCursorCat(`url(${whitecatcursor}), grab`)
+    } else if (cat === 'Grey cat' ) {
+      setCursorCat(`url(${greycatcursor}), grab`)
+    }
+  }
 
-  // const setCursor = () => {
-  //   if (cat === 'Orange cat') {
-  //     cursorCat = cursortypes[0]
-  //   }
-  //   //  else if (cat === 'White cat' ) {
-  //   //   avatar.cursor = "url(https://i.imgur.com/wPW1kGS.png), grab"
-  //   // } else if (cat === 'Grey cat' ) {
-  //   //   avatar.cursor = "url(https://i.imgur.com/QRKXzxp.png), grab"
-  //   // }
-  // }
+  useEffect(() => {
+    setCursor();
+  }, [cat])
+
+  useEffect(() => {
+    document.getElementById("game").style.cursor = cursorCat;
+  }, [cursorCat])
 
 
-  // useEffect(() => {
-  //   setCursor();
-  // }, [cat])
   const incrementScore = () => {
     let newScore = score + 1;
     setScore(newScore)
   }
 
+  const generateRandomFood = () => {
+
+  }
+
   const locationH = () => Math.random() * 450
   const locationW = () => Math.random() * 550
-
   const food = [chicken, cheese, fish, can];
-  let idx = Math.floor(Math.random() * food.length);
   const generateFood = () => (
-    <Food className="food" src={food[Math.floor(Math.random() * food.length)]} style={{top: locationH(), left: locationW()}} onClick={() => incrementScore()}/>
+    start ?
+    <Food className="food" src={food[Math.floor(Math.random() * food.length)]} style={{top: locationH(), left: locationW()}} onClick={  incrementScore}/>
+    : null
   )
 
-  const int = setInterval(generateFood, 2000)
-
+  // const int = setInterval(generateFood, 2000)
 
 
   const time = () => {
@@ -102,12 +110,9 @@ const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHig
       timeleft--;
       document.getElementById("countdown").textContent = timeleft;
       if (timeleft === 0) {
-        setStart(false)
-
-        // console.log('player', player)
-        // console.log('score', score)
-        updateScoreBoard()
-        clearInterval(downloadTimer)
+        setStart(false);
+        updateScoreBoard();
+        clearInterval(downloadTimer);
       }
     }, 1000);
   }
@@ -123,15 +128,6 @@ const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHig
       console.log(err);
     })
   }
-console.log('score', score)
-
-  useEffect(() => {
-    // setInterval(generateFood, 2000);
-    setPlay(start);
-    // setCursor();
-  }, [start])
-
-
 
 
   return (
@@ -150,7 +146,7 @@ console.log('score', score)
       </ControlPanel>
 
 
-      <Game id="game" style={{cursor: `url(${orangecatcursor}), auto`}}>
+      <Game id="game" >
        {/* { start ? setInterval(() => generateFood(), 2000) :  null} */}
 
        {generateFood()}
