@@ -22,7 +22,6 @@ app.post('/score', (req, res) => {
 app.get('/score', (req, res) => {
   getAllScores()
     .then((data) => {
-      console.log('get all scores' , data)
       res.status(200).send(data)
     })
     .catch((err) => {

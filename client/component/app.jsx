@@ -175,7 +175,7 @@ const App = () => {
         </HighScore>
       </LoginParent>
 
-      <GameView cat={cat} start={start} setStart={setStart} player={player} setPlayer={setPlayer} getHighScore={getHighScore} setHighScore={setHighScore}/>
+      <GameView cat={cat} start={start} setStart={setStart} getHighScore={getHighScore} setHighScore={setHighScore} username={username} email={email} />
 
 
     </div>

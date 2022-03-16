@@ -49,18 +49,19 @@ const Timer =styled.div`
 
 const Food = styled.img`
   position: relative;
-  width: 100px;
+  width: 150px;
   height: auto;
 `;
 
 //TODO get food to only move around the div
-//generate food at different intervals
+//generate food at different intervals - kind of happening but in batches of four
 
-//timer restarting at every click of a food item???
 
-const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHighScore}) => {
+const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, email}) => {
 
   const [score, setScore] = useState(0);
+  const [play, setPlay] = useState(false)
+
   const [cursorCat, setCursorCat] = useState(`url(${orangecatcursor}), grab`)
 
   const setCursor = () => {
@@ -88,10 +89,6 @@ const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHig
     setScore(newScore)
   }
 
-  const generateRandomFood = () => {
-
-  }
-
   const locationH = () => Math.random() * 450
   const locationW = () => Math.random() * 550
   const food = [chicken, cheese, fish, can];
@@ -101,25 +98,26 @@ const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHig
     : null
   )
 
-  // const int = setInterval(generateFood, 2000)
-
-
   const time = () => {
     let timeleft = 30;
+    setPlay(false)
     let downloadTimer = setInterval(() => {
       timeleft--;
       document.getElementById("countdown").textContent = timeleft;
       if (timeleft === 0) {
         setStart(false);
-        updateScoreBoard();
         clearInterval(downloadTimer);
       }
     }, 1000);
   }
 
   const updateScoreBoard = () => {
-    player.score = score
-    axios.post('/score', player)
+    let updatePlayerScore = {
+      username: username,
+      email: email,
+      score: score
+    }
+    axios.post('/score', updatePlayerScore)
     .then(() => {
       console.log('Success posting in app');
       getHighScore()
@@ -129,6 +127,10 @@ const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHig
     })
   }
 
+  useEffect(()=> {
+    setPlay(start)
+    updateScoreBoard()
+  }, [start])
 
   return (
     <>
@@ -138,7 +140,7 @@ const GameView = ({cat, start, setStart, player, setPlayer, getHighScore, setHig
           <h2 style={{textAlign: "center", marginTop: "0px"}}>{score}</h2>
         </CurrentScore>
         <Timer>
-          {start ? time() : null}
+          {play ? time() : null}
           <p style={{textAlign: "center", marginBottom: "2px"}}>Time Left</p>
           <h1 id="countdown" style={{textAlign: "center", marginTop: "0px"}}>30</h1>
 
