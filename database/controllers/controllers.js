@@ -3,7 +3,6 @@ const Images = require('../models/images.js');
 const mongoose = require('mongoose');
 
 const findScoreAndUpdate = (newPlayer) => {
-  console.log('newPlayer in controllers', newPlayer)
   return Score.findOneAndUpdate({email: newPlayer.email}, newPlayer, {upsert: true, new: true})
 };
 

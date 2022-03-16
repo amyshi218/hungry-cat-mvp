@@ -50,7 +50,7 @@ const Timer =styled.div`
 const Food = styled.img`
   position: relative;
   width: 150px;
-  height: auto;
+  height: 150px;
 `;
 
 //TODO get food to only move around the div

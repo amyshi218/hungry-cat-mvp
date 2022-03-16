@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import GameView from './gameview.jsx';
+import fatcat from '../../public/images/fatcat.png';
 
 const Title = styled.h1`
   font-family: 'Maven Pro', sans-serif;
@@ -78,6 +79,13 @@ const HighScore = styled.div`
   border-radius: 5%;
   background-color: #FBFEFB;
   margin-bottom: 100px;
+`;
+
+const FatCat = styled.img`
+  width: 300px;
+  height: auto;
+  justify-content: right;
+  margin-top: 20px;
 `;
 
 const App = () => {
@@ -172,6 +180,7 @@ const App = () => {
               <li key={idx}>{score.name} <a style={{textAlign: "right"}}>{score.score}</a></li>
             ))}
           </ol>
+          <FatCat src={fatcat}></FatCat>
         </HighScore>
       </LoginParent>
 
