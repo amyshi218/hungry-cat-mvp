@@ -72,6 +72,7 @@ const H3 = styled.h3`
 `;
 
 const HighScore = styled.div`
+  font-size: 18px;
   border: 1px solid #820933;
   margin: auto;
   width: 300px;
@@ -81,11 +82,15 @@ const HighScore = styled.div`
   margin-bottom: 100px;
 `;
 
+const Name = styled.div`
+
+`
+
 const FatCat = styled.img`
   width: 300px;
   height: auto;
   justify-content: right;
-  margin-top: 20px;
+  // margin-top: 20px;
 `;
 
 const App = () => {
@@ -177,7 +182,7 @@ const App = () => {
           <H3> High Score</H3>
           <ol>
             {highScore.map((score, idx) => (
-              <li key={idx}>{score.name} <a style={{textAlign: "right"}}>{score.score}</a></li>
+              <li key={idx}stle={{textAlign:"left"}}>{score.name} <a style={{float: "right", marginRight: "15px"}}>{score.score}</a></li>
             ))}
           </ol>
           <FatCat src={fatcat}></FatCat>
