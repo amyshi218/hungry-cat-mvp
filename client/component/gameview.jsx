@@ -48,6 +48,7 @@ const Timer =styled.div`
 
 
 const Food = styled.img`
+  // animation-delay: 1s;
   position: relative;
   width: 150px;
   height: 150px;
@@ -61,8 +62,8 @@ const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, e
 
   const [score, setScore] = useState(0);
   const [play, setPlay] = useState(false)
-
   const [cursorCat, setCursorCat] = useState(`url(${orangecatcursor}), grab`)
+  const [controlPost, setControlPost] = useState(false)
 
   const setCursor = () => {
     if (cat === 'Orange cat') {
@@ -106,6 +107,7 @@ const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, e
       document.getElementById("countdown").textContent = timeleft;
       if (timeleft === 0) {
         setStart(false);
+        setControlPost(true)
         clearInterval(downloadTimer);
       }
     }, 1000);
@@ -129,8 +131,13 @@ const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, e
 
   useEffect(()=> {
     setPlay(start)
-    updateScoreBoard()
+    document.getElementById('game').scrollIntoView()
   }, [start])
+
+  useEffect(() => {
+    updateScoreBoard()
+
+  }, [controlPost])
 
   return (
     <>
