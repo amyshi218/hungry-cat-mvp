@@ -38,7 +38,7 @@ const CurrentScore = styled.div`
   height: 80px;
 `;
 
-const Timer =styled.div`
+const Timer = styled.div`
   background: #FBFEFB;
   border: 1px solid #820933;
   border-radius: 5%;
@@ -58,7 +58,7 @@ const Food = styled.img`
 //generate food at different intervals - kind of happening but in batches of four
 
 
-const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, email}) => {
+const GameView = ({ cat, start, setStart, getHighScore, setHighScore, username, email }) => {
 
   const [score, setScore] = useState(0);
   const [play, setPlay] = useState(false)
@@ -69,9 +69,9 @@ const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, e
     if (cat === 'Orange cat') {
       setCursorCat(`url(${orangecatcursor}), grab`)
     }
-     else if (cat === 'White cat' ) {
+    else if (cat === 'White cat') {
       setCursorCat(`url(${whitecatcursor}), grab`)
-    } else if (cat === 'Grey cat' ) {
+    } else if (cat === 'Grey cat') {
       setCursorCat(`url(${greycatcursor}), grab`)
     }
   }
@@ -95,8 +95,8 @@ const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, e
   const food = [chicken, cheese, fish, can];
   const generateFood = () => (
     start ?
-    <Food className="food" src={food[Math.floor(Math.random() * food.length)]} style={{top: locationH(), left: locationW()}} onClick={  incrementScore}/>
-    : null
+      <Food className="food" src={food[Math.floor(Math.random() * food.length)]} style={{ top: locationH(), left: locationW() }} onClick={incrementScore} />
+      : null
   )
 
   const time = () => {
@@ -120,16 +120,16 @@ const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, e
       score: score
     }
     axios.post('/score', updatePlayerScore)
-    .then(() => {
-      console.log('Success posting in app');
-      getHighScore()
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .then(() => {
+        console.log('Success posting in app');
+        getHighScore()
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     setPlay(start)
     document.getElementById('game').scrollIntoView()
   }, [start])
@@ -143,34 +143,25 @@ const GameView = ({cat, start, setStart, getHighScore, setHighScore, username, e
     <>
       <ControlPanel>
         <CurrentScore>
-          <p style={{textAlign: "center", marginBottom: "3px"}}>Current Score</p>
-          <h2 style={{textAlign: "center", marginTop: "0px"}}>{score}</h2>
+          <p style={{ textAlign: "center", marginBottom: "3px" }}>Current Score</p>
+          <h2 style={{ textAlign: "center", marginTop: "0px" }}>{score}</h2>
         </CurrentScore>
         <Timer>
           {play ? time() : null}
-          <p style={{textAlign: "center", marginBottom: "2px"}}>Time Left</p>
-          <h1 id="countdown" style={{textAlign: "center", marginTop: "0px"}}>30</h1>
+          <p style={{ textAlign: "center", marginBottom: "2px" }}>Time Left</p>
+          <h1 id="countdown" style={{ textAlign: "center", marginTop: "0px" }}>30</h1>
 
         </Timer>
       </ControlPanel>
 
-
       <Game id="game" >
-       {/* { start ? setInterval(() => generateFood(), 2000) :  null} */}
-
-       {generateFood()}
-       {generateFood()}
-       {generateFood()}
-       {generateFood()}
-
+        {generateFood()}
+        {generateFood()}
+        {generateFood()}
+        {generateFood()}
       </Game>
-
-
-
     </>
   )
 }
 
 export default GameView;
-
-// `url(${avatar})`

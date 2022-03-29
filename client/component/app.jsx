@@ -100,8 +100,7 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [cat, setCat] = useState('');
   const [start, setStart] = useState(false);
-  const [player, setPlayer] = useState(null)
-  //array of objects
+  const [player, setPlayer] = useState(null);
   const [highScore, setHighScore] = useState([]);
 
   const addPlayer = () => {
@@ -147,42 +146,42 @@ const App = () => {
         Hungry Cat
       </Title>
       <LoginParent>
-        <img src="https://i.imgur.com/P2CJX21.png" style={{justifySelf: "start"}}></img>
+        <img src="https://i.imgur.com/P2CJX21.png" style={{ justifySelf: "start" }}></img>
         <Login>
-        <div>
-          <Formlabel>
-            Username
-            <div>
-              <input type="text" name="name" onChange={ (e) => setUserName(e.target.value) } required={true}/>
-            </div>
-          </Formlabel>
-          <Formlabel>
-            Email
-            <div>
-              <input type="email" name="name" onChange={ (e) => setEmail(e.target.value) } required={true}/>
-            </div>
-          </Formlabel>
-          <H3>Pick your cat</H3>
-          <CatsParent>
-            <CatsSection>
-              <CatsImg src="https://i.imgur.com/6oRAfeW.png" onClick={() => setCat('Orange cat')} />
-            </CatsSection>
-            <CatsSection>
-              <CatsImg src="https://i.imgur.com/wPW1kGS.png" onClick={() => setCat('White cat')} />
-            </CatsSection>
-            <CatsSection>
-              <CatsImg src="https://i.imgur.com/QRKXzxp.png" onClick={() => setCat('Grey cat')} />
-            </CatsSection>
-          </CatsParent>
-          {cat ? <div style={{textAlign : "center"}}>{cat} picked!</div> : null}
-          <StartGameButton type="submit" value="Submit" onClick={ (e) =>  {  addPlayer(); }}/>
-        </div>
+          <div>
+            <Formlabel>
+              Username
+              <div>
+                <input type="text" name="name" onChange={(e) => setUserName(e.target.value)} required={true} />
+              </div>
+            </Formlabel>
+            <Formlabel>
+              Email
+              <div>
+                <input type="email" name="name" onChange={(e) => setEmail(e.target.value)} required={true} />
+              </div>
+            </Formlabel>
+            <H3>Pick your cat</H3>
+            <CatsParent>
+              <CatsSection>
+                <CatsImg src="https://i.imgur.com/6oRAfeW.png" onClick={() => setCat('Orange cat')} />
+              </CatsSection>
+              <CatsSection>
+                <CatsImg src="https://i.imgur.com/wPW1kGS.png" onClick={() => setCat('White cat')} />
+              </CatsSection>
+              <CatsSection>
+                <CatsImg src="https://i.imgur.com/QRKXzxp.png" onClick={() => setCat('Grey cat')} />
+              </CatsSection>
+            </CatsParent>
+            {cat ? <div style={{ textAlign: "center" }}>{cat} picked!</div> : null}
+            <StartGameButton type="submit" value="Submit" onClick={(e) => { addPlayer(); }} />
+          </div>
         </Login>
         <HighScore>
           <H3> High Score</H3>
           <ol>
             {highScore.map((score, idx) => (
-              <li key={idx}stle={{textAlign:"left"}}>{score.name} <a style={{float: "right", marginRight: "15px"}}>{score.score}</a></li>
+              <li key={idx} stle={{ textAlign: "left" }}>{score.name} <a style={{ float: "right", marginRight: "15px" }}>{score.score}</a></li>
             ))}
           </ol>
           <FatCat src={fatcat}></FatCat>
@@ -190,7 +189,6 @@ const App = () => {
       </LoginParent>
 
       <GameView cat={cat} start={start} setStart={setStart} getHighScore={getHighScore} setHighScore={setHighScore} username={username} email={email} />
-
 
     </div>
   )
