@@ -6,7 +6,6 @@ const app = express();
 app.use(express.static(__dirname + '/../public'));
 app.use(express.json());
 
-//post score after game ends
 app.post('/score', (req, res) => {
   findScoreAndUpdate(req.body)
     .then(() => {
@@ -18,7 +17,6 @@ app.post('/score', (req, res) => {
     })
 })
 
-//get updated score list after game ends. get top 5
 app.get('/score', (req, res) => {
   getAllScores()
     .then((data) => {
